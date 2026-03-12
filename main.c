@@ -19,7 +19,7 @@ const char *ordinal(int n) {
 typedef struct {
     char date[11];
     char time[6];
-    char body[256];
+    char body[512];
 } Entry;
 
 int compare(const void *a, const void *b) {
@@ -77,7 +77,7 @@ int parse_entry(const char *buffer, Entry *entry) {
 }
 
 int load_entries(Entry *entries, int max) {
-    char buffer[1024];
+    char buffer[4096];
     int count = 0;
 
     FILE *fp = popen("remind -t14 --json ~/.reminders", "r");
