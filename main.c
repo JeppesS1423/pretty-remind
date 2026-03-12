@@ -113,8 +113,6 @@ void print_entries(Entry *entries, int count) {
 int main(void) {
     Entry entries[64];
 
-    printf("\nReminders\n\n");
-
     int count = load_entries(entries, 64);
     qsort(entries, count, sizeof(Entry), compare);
     print_entries(entries, count);
