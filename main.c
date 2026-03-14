@@ -56,13 +56,21 @@ int parse_entry(const char *buffer, Entry *entry) {
 
     pos += strlen("\"eventstart\":\"");
     int i = 0;
-    while (*pos != 'T') entry->date[i++] = *pos++;
+    while (*pos != 'T' && i < (int)sizeof(entry->date) - 1)
+        entry->date[i++] = *pos++;
     entry->date[i] = '\0';
+
+    if (*pos == '\0')
+        return 0;
     pos++;
 
     i = 0;
-    while (*pos != '"') entry->time[i++] = *pos++;
+    while (*pos != '"' && i < (int)sizeof(entry->time) - 1)
+        entry->time[i++] = *pos++;
     entry->time[i] = '\0';
+
+    if (*pos == '\0')
+        return 0;
 
     pos = strstr(buffer, "\"body\":\"");
     if (!pos) return 0;
@@ -99,7 +107,7 @@ void print_entries(Entry *entries, int count) {
     char formatted[64];
     if (count == 0) {
         printf("  %sNone%s\n", COLOR_DIM, COLOR_RESET);
-    };
+    }
     for (int i = 0; i < count; i++) {
         if (strcmp(entries[i].date, current_date) != 0) {
             strcpy(current_date, entries[i].date);
