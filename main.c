@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#define MAX_DISPLAY_ENTRIES 64
 #define COLOR_CYAN "\033[38;5;81m"
 #define COLOR_DIM "\033[38;5;245m"
 #define COLOR_RESET "\033[0m"
@@ -130,9 +130,9 @@ void print_entries(Entry *entries, int count) {
 }
 
 int main(void) {
-    Entry entries[64];
+    Entry entries[MAX_DISPLAY_ENTRIES];
 
-    int count = load_entries(entries, 64);
+    int count = load_entries(entries, sizeof(entries) / sizeof(entries[0]));
     qsort(entries, count, sizeof(Entry), compare);
     print_entries(entries, count);
 }
