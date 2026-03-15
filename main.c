@@ -30,9 +30,17 @@ int compare(const void *a, const void *b) {
     return strcmp(ea->time, eb->time);
 }
 
-void format_date(const char *iso_date, char *out, size_t out_size) {
-    int year, month, day;
-    sscanf(iso_date, "%d-%d-%d", &year, &month, &day);
+int format_date(const char *iso_date, char *out, size_t out_size) {
+    char *end;
+
+    long year = strtol(iso_date, &end, 10);
+    if (end == iso_date || *end != '-') return 0;
+
+    long month = strtol(end + 1, &end, 10);
+    if (*end != '-') return 0;
+
+    long day = strtol(end + 1, &end, 10);
+    if (*end != '\0' && *end != '"') return 0;
 
     const char *months[] = {
         "January","February","March","April","May","June",
@@ -48,6 +56,8 @@ void format_date(const char *iso_date, char *out, size_t out_size) {
     };
 
     snprintf(out, out_size, "%s, %d%s %s", weekdays[dow], day, ordinal(day), months[month-1]);
+
+    return 1;
 }
 
 int parse_entry(const char *buffer, Entry *entry) {
