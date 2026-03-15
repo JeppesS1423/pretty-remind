@@ -1,6 +1,8 @@
 # pretty-remind
 A simple C executable that lists your upcoming reminders with flair.
 
+![example output image](pretty_remind.png)
+
 ## Requirements
 - [remind](https://dianne.skoll.ca/projects/remind/) installed and accessible in your `PATH`
 - A reminders file at `~/.reminders`
