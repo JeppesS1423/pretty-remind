@@ -117,6 +117,7 @@ void print_entries(Entry *entries, int count) {
     char formatted[64];
     if (count == 0) {
         printf("  %sNone%s\n", COLOR_DIM, COLOR_RESET);
+        return;
     }
     for (int i = 0; i < count; i++) {
         if (strcmp(entries[i].date, current_date) != 0) {
